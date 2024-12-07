@@ -10,13 +10,23 @@ import (
 )
 
 func main() {
-	puzzleInput := parseInput("day-7.example")
+	puzzleInput := parseInput("day-7.input")
 	fmt.Println("Part One: ", partOne(puzzleInput))
+	fmt.Println("Part Two: ", partTwo(puzzleInput))
 }
 
 func partOne(puzzleInput map[uint64][]uint64) (total uint64) {
 	for result, operands := range puzzleInput {
 		if evaluate(0, operands, 0, result) {
+			total += result
+		}
+	}
+	return total
+}
+
+func partTwo(puzzleInput map[uint64][]uint64) (total uint64) {
+	for result, operands := range puzzleInput {
+		if evaluateV2(0, operands, 0, result) {
 			total += result
 		}
 	}
@@ -36,6 +46,16 @@ func evaluate(at int, operands []uint64, value, result uint64) bool {
 		return value == result
 	}
 	return evaluate(at+1, operands, value+operands[at], result) || evaluate(at+1, operands, value*operands[at], result)
+}
+
+func evaluateV2(at int, operands []uint64, value, result uint64) bool {
+	if at == len(operands) || value > result {
+		return value == result
+	}
+	concatValue := concatenateValues(value, operands[at])
+	return evaluateV2(at+1, operands, value+operands[at], result) ||
+		evaluateV2(at+1, operands, value*operands[at], result) ||
+		evaluateV2(at+1, operands, concatValue, result)
 }
 
 func parseInput(fileName string) (puzzleInput map[uint64][]uint64) {
