@@ -20,7 +20,7 @@ type robot struct {
 
 func main() {
 	puzzleInput := parseInput("day-14.input")
-	res := partOne(puzzleInput, 100)
+	res, _ := partOne(puzzleInput, 100)
 	fmt.Println("Part One:", res)
 	partTwo()
 }
