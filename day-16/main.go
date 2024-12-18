@@ -33,10 +33,10 @@ type state struct {
 }
 
 var directions = []direction{
-	direction{-1, 0},
-	direction{0, 1},
-	direction{1, 0},
-	direction{0, -1},
+	{-1, 0},
+	{0, 1},
+	{1, 0},
+	{0, -1},
 }
 
 func main() {
